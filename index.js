@@ -5,8 +5,8 @@ const axios = require("axios");
 const app = express();
 app.use(bodyParser.json());
 
-const TELEGRAM_BOT_TOKEN = process.env.BOT_TOKEN;
-const TELEGRAM_CHAT_ID = process.env.CHAT_ID;
+const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
 app.post("/", async (req, res) => {
   const alertMessage = req.body.text || "⚠️ Alert prišiel bez textu";
