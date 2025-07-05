@@ -1,3 +1,4 @@
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const axios = require("axios");
@@ -9,20 +10,26 @@ const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
 app.post("/", async (req, res) => {
-  const alertMessage = req.body.text || "Alert received!";
+  const alertMessage = req.body.text || "Alert z TradingView";
+  console.log("📩 Prijatý alert:", req.body); // Toto je ten nový log
 
   try {
     await axios.post(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
       chat_id: TELEGRAM_CHAT_ID,
       text: alertMessage,
     });
-    res.status(200).send("Alert sent to Telegram!");
+    res.status(200).send("Alert odoslaný na Telegram");
   } catch (error) {
-    console.error(error);
-    res.status(500).send("Failed to send alert.");
+    console.error("❌ Chyba pri odoslaní:", error);
+    res.status(500).send("Nepodarilo sa odoslať alert na Telegram");
   }
 });
 
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
+app.get("/", (req, res) => {
+  res.send("Webhook beží");
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`✅ Server beží na porte ${PORT}`);
 });
