@@ -21,7 +21,7 @@ app.post("/", async (req, res) => {
     res.status(200).send("✅ Alert odoslaný na Telegram");
   } catch (error) {
     console.error("❌ Chyba pri odoslaní:", error);
-    res.status(500).send("❌ Nepodarilo sa odoslať alert na Telegram");
+    res.status(500).send("❌ Nepodarilo sa odoslať alert");
   }
 });
 
