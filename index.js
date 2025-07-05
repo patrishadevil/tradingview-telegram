@@ -10,18 +10,19 @@ const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
 app.post("/", async (req, res) => {
-  const alertMessage = req.body.text || "Alert z TradingView";
-  console.log("📩 Prijatý alert:", req.body); // Toto je ten nový log
+  const alertMessage = req.body.text || "⚠️ ALERT bez textu!";
+  console.log("📩 Prijatý alert:", req.body);
 
   try {
     await axios.post(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
       chat_id: TELEGRAM_CHAT_ID,
       text: alertMessage,
     });
-    res.status(200).send("Alert odoslaný na Telegram");
+
+    res.status(200).send("✅ Alert odoslaný na Telegram");
   } catch (error) {
-    console.error("❌ Chyba pri odoslaní:", error);
-    res.status(500).send("Nepodarilo sa odoslať alert na Telegram");
+    console.error("❌ Chyba pri odoslaní:", error.message);
+    res.status(500).send("❌ Nepodarilo sa odoslať správu na Telegram");
   }
 });
 
