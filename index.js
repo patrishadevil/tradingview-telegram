@@ -1,4 +1,3 @@
-
 const express = require("express");
 const bodyParser = require("body-parser");
 const axios = require("axios");
@@ -6,11 +5,11 @@ const axios = require("axios");
 const app = express();
 app.use(bodyParser.json());
 
-const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
-const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+const TELEGRAM_BOT_TOKEN = process.env.BOT_TOKEN;
+const TELEGRAM_CHAT_ID = process.env.CHAT_ID;
 
 app.post("/", async (req, res) => {
-  const alertMessage = req.body.text || "⚠️ ALERT bez textu!";
+  const alertMessage = req.body.text || "⚠️ Alert prišiel bez textu";
   console.log("📩 Prijatý alert:", req.body);
 
   try {
@@ -21,8 +20,8 @@ app.post("/", async (req, res) => {
 
     res.status(200).send("✅ Alert odoslaný na Telegram");
   } catch (error) {
-    console.error("❌ Chyba pri odoslaní:", error.message);
-    res.status(500).send("❌ Nepodarilo sa odoslať správu na Telegram");
+    console.error("❌ Chyba pri odoslaní:", error);
+    res.status(500).send("❌ Nepodarilo sa odoslať alert na Telegram");
   }
 });
 
